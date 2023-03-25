@@ -1,6 +1,5 @@
 package org.openjfx;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -10,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -17,7 +18,6 @@ public class Controller implements Initializable {
     FileChooser fileChooser;
     String xml, xmlOut;
     File input, output;
-    boolean graphReady;
 
     @FXML
     TextArea originalTA = new TextArea();
@@ -35,7 +35,7 @@ public class Controller implements Initializable {
         fileChooser.getExtensionFilters().add(extFilter2);
     }
 
-    public void onLoadFile(ActionEvent e) {
+    public void onLoadFile() {
 
         input = fileChooser.showOpenDialog(new Stage());
 
@@ -46,7 +46,8 @@ public class Controller implements Initializable {
             } catch (FileNotFoundException ee) {
                 ee.printStackTrace();
             }
-            xml = CustomStdIn.readString().replaceAll("\r", "");
+            xml = CustomStdIn.readString();
+
             originalTA.setText(xml);
             CustomStdIn.close();
             System.setIn(orgInStream);
@@ -59,7 +60,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void onSaveFile(ActionEvent e) {
+    public void onSaveFile() {
         xml = originalTA.getText();
         output = fileChooser.showSaveDialog(new Stage());
 
@@ -83,11 +84,28 @@ public class Controller implements Initializable {
         }
     }
 
-    public void onCalculateGPA(ActionEvent e) {
+    public void onCalculateGPA() {
         xml = originalTA.getText();
         if (checkIfEmpty(xml))
             return;
 
+        // ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|,]+")));
+
+        // Every line of the input in a string in the linesInArrList
+        // can be used to parse it into first line of the course info
+        // other n lines (after the second one) for the students in this course
+        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("\n")));
+
+
+        // used to collect the output string to the gui
+        StringBuilder sb = new StringBuilder();
+        for (String element: linesInArrList){
+            sb.append(element).append("\n\n");
+        }
+
+        // show your method result in xmlOut
+        xmlOut = sb.toString();
+        resultTA.setText(xmlOut);
     }
 
     private static boolean checkIfEmpty(String xml) {
