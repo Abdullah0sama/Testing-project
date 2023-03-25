@@ -29,8 +29,8 @@ public class Controller implements Initializable {
         fileChooser = new FileChooser();
         //fileChooser.setInitialDirectory(new File("src\\sample"));
 
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.getExtensionFilters().add(extFilter2);
     }
@@ -94,7 +94,7 @@ public class Controller implements Initializable {
         // Every line of the input in a string in the linesInArrList
         // can be used to parse it into first line of the course info
         // other n lines (after the second one) for the students in this course
-        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("\n")));
+        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
 
 
         // used to collect the output string to the gui
