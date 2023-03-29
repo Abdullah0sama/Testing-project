@@ -91,11 +91,13 @@ public class Controller implements Initializable {
 
         // ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|,]+")));
 
-        // Every line of the input in a string in the linesInArrList
-        // can be used to parse it into first line of the course info
-        // other n lines (after the second one) for the students in this course
+        // Every line of the input is in a string in the linesInArrList
+        // the first line of the input is the course identification line
+        // other n lines (after the first one) for all the students in this course
         ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
 
+        parseCourseLine("");
+        parseStudentLines("");
 
         // used to collect the output string to the gui
         StringBuilder sb = new StringBuilder();
@@ -107,6 +109,17 @@ public class Controller implements Initializable {
         xmlOut = sb.toString();
         resultTA.setText(xmlOut);
     }
+
+    String parseCourseLine(String firstLine) {
+
+        return " ";
+    }
+
+    String parseStudentLines(String consecutive) {
+
+        return " ";
+    }
+
 
     private static boolean checkIfEmpty(String xml) {
         if (xml.isEmpty()) {
