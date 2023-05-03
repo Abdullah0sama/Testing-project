@@ -116,7 +116,7 @@ public class Controller implements Initializable {
         outputString.add("Max Mark: " + 100);
 
         for(int i = 0; i < subjectGrades.size(); ++i) {
-            SubjectGrades subject = subjectGrades.get(i);
+           SubjectGrades subject = subjectGrades.get(i);
             String currentSubject = subject.getStudentName() + " " + subject.getStudentID() + " " + subject.gpaCalculator() + " " + subject.gradeCalculator();
             outputString.add(currentSubject);
         }
@@ -157,6 +157,11 @@ public class Controller implements Initializable {
         student.setMidterm(Integer.parseInt(studentData.get(4)));
         student.setFinal(Integer.parseInt(studentData.get(5)));
         return student;
+    }
+
+    String parseStudentLines(String consecutive) {
+
+        return " ";
     }
 
 
