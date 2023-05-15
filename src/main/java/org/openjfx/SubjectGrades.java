@@ -36,8 +36,9 @@ public class SubjectGrades {
             throw new IllegalArgumentException("The first 3 letters should be alphabet");
         } else if (!numCode.matches(("[0-9]+"))) {
             throw new IllegalArgumentException("From fourth to Sixth letters should be numbers");
-        }else if ((subjectCode.length() == 7) && (subjectCode.indexOf("s") != 6 )){
-            throw new IllegalArgumentException("The seventh letter should be (S)");
+        }else if (subjectCode.length() == 7){
+            if(subjectCode.charAt(6) == 's')
+                throw new IllegalArgumentException("The seventh letter should be (S)");
         }
         SubjectCode = subjectCode;
     }
