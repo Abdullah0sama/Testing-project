@@ -97,18 +97,20 @@ public class Controller implements Initializable {
         // Every line of the input is in a string in the linesInArrList
         // the first line of the input is the course identification line
         // other n lines (after the first one) for all the students in this course
-        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
+//        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
 
-        ArrayList<SubjectGrades> subjects = studentParser.parseFile(xml);
+        try {
+            ArrayList<SubjectGrades> subjects = studentParser.parseFile(xml);
 
-        // used to collect the output string to the gui
-//        StringBuilder sb = new StringBuilder();
-//        for (String element: linesInArrList){
-//            sb.append(element).append("\n\n");
-//        }
-        // show your method result in xmlOut
-        xmlOut = subjectsOutput(subjects);
-        resultTA.setText(xmlOut);
+            xmlOut = subjectsOutput(subjects);
+            resultTA.setText(xmlOut);
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Cannot be calculated");
+            alert.setHeaderText("There was an error during the calculation of the grade");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
 
@@ -117,20 +119,13 @@ public class Controller implements Initializable {
         outputString.add("Subject Name: " + subjectGrades.get(0).getSubjectName());
         outputString.add("Max Mark: " + 100);
 
-        for(int i = 0; i < subjectGrades.size(); ++i) {
-           SubjectGrades subject = subjectGrades.get(i);
+        for (SubjectGrades subject : subjectGrades) {
             String currentSubject = subject.getStudentName() + " " + subject.getStudentID() + " " + subject.gpaCalculator() + " " + subject.gradeCalculator();
             outputString.add(currentSubject);
         }
 
         return String.join("\n", outputString);
     }
-
-    String parseStudentLines(String consecutive) {
-
-        return " ";
-    }
-
 
     private static boolean checkIfEmpty(String xml) {
         if (xml.isEmpty()) {
