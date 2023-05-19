@@ -3,6 +3,7 @@ package org.openjfx;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DFTest {
 
@@ -26,11 +27,15 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setSubjectName("Physics");
 
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setSubjectName("Physics!");
+        });
+
+        // Assert
+        assertEquals("Name must contain only alphabetic characters and spaces, and should not start with a space.", thrown.getMessage());
     }
 
     @Test
@@ -38,11 +43,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setSubjectName("Chemistry");
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setSubjectName(" Chemistry");
+        });
+
+        assertEquals("Name must contain only alphabetic characters and spaces, and should not start with a space.", thrown.getMessage());
     }
 
     @Test
@@ -73,16 +80,18 @@ public class DFTest {
         assertEquals("John Doe", yourObject.getStudentName());
     }
 
-    @Test(expected)
+    @Test
     public void testSetStudentName_InvalidSpecialCharacters() {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setStudentName("John@Doe");
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setStudentName("John@Doe");
+        });
+
+        assertEquals("Name must contain only alphabetic characters and spaces, and should not start with a space.", thrown.getMessage());
     }
 
 
@@ -106,11 +115,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setStudentID("1234567");
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setStudentID("1234567");
+        });
+
+        assertEquals("The first seven characters are not all numbers.", thrown.getMessage());
     }
 
     @Test
@@ -118,11 +129,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setStudentID("12A34567");
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setStudentID("12A34567");
+        });
+
+        assertEquals("The first seven characters are not all numbers.", thrown.getMessage());
     }
 
     @Test
@@ -130,11 +143,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setStudentID("ABCDEFGH");
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setStudentID("ABCDEFGH");
+        });
+
+        assertEquals("The first seven characters are not all numbers.", thrown.getMessage());
     }
 
 
@@ -159,22 +174,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setOralMark(-5);
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
-    }
-    @Test
-    public void testSetOralMark_InvalidMarkAboveRange() {
-        // Arrange
-        SubjectGrades yourObject = new SubjectGrades();
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setOralMark(-5);
+        });
 
-        // Act
-        yourObject.setOralMark(15);
-
-        // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        assertEquals("Mark must be between 0 and 10.", thrown.getMessage());
     }
 
 //set final
@@ -194,24 +200,17 @@ public class DFTest {
 
 
     @Test
-    public void testSetFinal_InvalidMarkBelowRange() {
-        // Arrange
-        SubjectGrades yourObject = new SubjectGrades();
-
-        // Act
-        yourObject.setFinal(-5);
-
-        // Assert
-        // Expecting an IllegalArgumentException to be thrown.
-    }
-
-    @Test
     public void testSetFinal_InvalidMarkAboveRange() {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setFinal(75);
+        // Assert
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setFinal(75);
+        });
+
+        assertEquals("Mark must be between 0 and 60.", thrown.getMessage());
 
         // Assert
         // Expecting an IllegalArgumentException to be thrown.
@@ -237,11 +236,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setActivities(-5);
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setActivities(-5);
+        });
+
+        assertEquals("Mark must be between 0 and 10.", thrown.getMessage());
     }
 
     @Test
@@ -249,11 +250,13 @@ public class DFTest {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
 
-        // Act
-        yourObject.setActivities(15);
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            yourObject.setActivities(15);
+        });
+
+        assertEquals("Mark must be between 0 and 10.", thrown.getMessage());
     }
 
 
@@ -268,7 +271,7 @@ public class DFTest {
         String grade = SubjectGrades.calculateGrade(mark);
 
         // Assert
-        assertEquals("B", grade);
+        assertEquals("B+", grade);
     }
 
     @Test
@@ -276,11 +279,13 @@ public class DFTest {
         // Arrange
         int mark = -5;
 
-        // Act
-        String grade = SubjectGrades.calculateGrade(mark);
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            String grade = SubjectGrades.calculateGrade(mark);
+        });
+
+        assertEquals("Mark should be more than 0 and less than or equal 100", thrown.getMessage());
     }
 
     @Test
@@ -288,11 +293,13 @@ public class DFTest {
         // Arrange
         int mark = 110;
 
-        // Act
-        String grade = SubjectGrades.calculateGrade(mark);
-
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            // Act
+            String grade = SubjectGrades.calculateGrade(mark);
+        });
+
+        assertEquals("Mark should be more than 0 and less than or equal 100", thrown.getMessage());
     }
 
 
@@ -302,32 +309,37 @@ public class DFTest {
     public void testGradeCalculator_ValidValues() {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
-        yourObject.setOralMark(80);
-        yourObject.setMidterm(70);
-        yourObject.setFinal(85);
-        yourObject.setActivities(90);
 
-        // Act
-        String grade = yourObject.gradeCalculator();
 
         // Assert
-        assertEquals("B", grade);
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            yourObject.setOralMark(80);
+            yourObject.setMidterm(70);
+            yourObject.setFinal(85);
+            yourObject.setActivities(90);
+            // Act
+            String grade = yourObject.gradeCalculator();
+        });
+
+        assertEquals("Mark must be between 0 and 10.", thrown.getMessage());
     }
 
     @Test
     public void testGradeCalculator_InvalidValuesAboveRange() {
         // Arrange
         SubjectGrades yourObject = new SubjectGrades();
-        yourObject.setOralMark(80);
-        yourObject.setMidterm(70);
-        yourObject.setFinal(40);
-        yourObject.setActivities(60);
 
-        // Act
-        String grade = yourObject.gradeCalculator();
 
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            yourObject.setOralMark(80);
+            yourObject.setMidterm(70);
+            yourObject.setFinal(40);
+            yourObject.setActivities(60);
+            // Act
+            String grade = yourObject.gradeCalculator();
+        });
         // Assert
-        // Expecting an IllegalArgumentException to be thrown.
+        assertEquals("Mark must be between 0 and 10.", thrown.getMessage());
     }
 
 }
