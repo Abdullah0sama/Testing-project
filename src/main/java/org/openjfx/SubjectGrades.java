@@ -37,7 +37,7 @@ public class SubjectGrades {
         } else if (!numCode.matches(("[0-9]+"))) {
             throw new IllegalArgumentException("From fourth to Sixth letters should be numbers");
         }else if (subjectCode.length() == 7){
-            if(subjectCode.charAt(6) == 's')
+            if(subjectCode.charAt(6) != 's')
                 throw new IllegalArgumentException("The seventh letter should be (S)");
         }
         SubjectCode = subjectCode;
