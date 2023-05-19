@@ -20,6 +20,7 @@ public class Controller implements Initializable {
     String xml, xmlOut;
     File input, output;
 
+    StudentParser studentParser;
     @FXML
     TextArea originalTA = new TextArea();
     @FXML
@@ -28,6 +29,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileChooser = new FileChooser();
+        studentParser = new StudentParser();
         //fileChooser.setInitialDirectory(new File("src\\sample"));
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -97,7 +99,7 @@ public class Controller implements Initializable {
         // other n lines (after the first one) for all the students in this course
         ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
 
-        ArrayList<SubjectGrades> subjects = parseFile(xml);
+        ArrayList<SubjectGrades> subjects = studentParser.parseFile(xml);
 
         // used to collect the output string to the gui
 //        StringBuilder sb = new StringBuilder();
@@ -122,41 +124,6 @@ public class Controller implements Initializable {
         }
 
         return String.join("\n", outputString);
-    }
-    ArrayList<SubjectGrades> parseFile(String fileContent) {
-        ArrayList<String> linesInArrList = new ArrayList<>(Arrays.asList(xml.split("[\n|\r]+")));
-        String[] subjectInfo = linesInArrList.get(0).split(",");
-        String subjectName = subjectInfo[0];
-        String subjectCode = subjectInfo[1];
-        String subjectMaxMark = subjectInfo[2];
-
-        ArrayList<SubjectGrades> subjectsGrades = new ArrayList<>();
-
-        for (int i = 1; i < linesInArrList.size(); ++i) {
-            subjectsGrades.add(parseStudent(subjectName, subjectCode, linesInArrList.get(i)));
-        }
-
-        return subjectsGrades;
-    }
-    SubjectGrades parseStudent(String subjectName, String subjectCode, String studentTxt) {
-
-        SubjectGrades student = new SubjectGrades();
-
-        student.setSubjectName(subjectName);
-        student.setSubjectCode(subjectCode);
-        ArrayList<String> studentData = new ArrayList<>(Arrays.asList(studentTxt.split(",")));
-
-        if(studentData.size() != 6) {
-            throw new IllegalArgumentException("Some student arguments are missing!");
-        }
-
-        student.setStudentName(studentData.get(0));
-        student.setStudentID(studentData.get(1));
-        student.setActivities(Integer.parseInt(studentData.get(2)));
-        student.setOralMark(Integer.parseInt(studentData.get(3)));
-        student.setMidterm(Integer.parseInt(studentData.get(4)));
-        student.setFinal(Integer.parseInt(studentData.get(5)));
-        return student;
     }
 
     String parseStudentLines(String consecutive) {
